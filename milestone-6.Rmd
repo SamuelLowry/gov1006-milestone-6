@@ -27,9 +27,21 @@ library(arm)
 
 # Extension 
 
-\textit{Why Friends and Neighbors? Explaining the Electoral Appeal of Local Roots} by Rosie Campbell, Philip Cowley, Nick Vivyan, and Markus Wagner in the \textit{The Journal of Politics} aims to answer the driving question of, "Why do politicians with strong local roots receive more electoral support?" by running and analyzing two separate studies. The first study uses a "paired profiles factorial vignette design" by asking subjects to rate hypothetical members of Parliament on a scale from 1 to 10. The hypothetical members have varying levels of local roots as well as varying levels of "behavioral localism"—their track record of constituency service and if they act more so as a trustee or delegate. The analysis which is largely visualized in figure 1 consists of both the raw difference in ratings between varying levels of local roots and across levels of behavioral localism. It then uses models to predict the effect of having local roots which can be seen on display in my "beautiful graphic" In the second study, subjects again considered hypothetical members of Parliament with varying levels of local roots as compared to varying levels of behavioral localism mainly in the first study. In this case, the subjects also received information on their political preferences and partisan loyalties. The first study depicted that the additional information swayed rankings, but local roots still seemed to have an association no matter what. The second study agreed with these results stating that, "even if voters are provided with a rich array of information about politicians’ behavior and ideological positioning, the effect of local roots remained positive and notable." The remainder of the article discusses the nuances of these results within the frame of the driving question. It also attempts to contextualize these findings with the broader literature of the effects off in-group/out-group dynamics in the context of localism. 
+I have already been able to replicte all of the results from \textit{Why Friends and Neighbors? Explaining the Electoral Appeal of Local Roots} by Rosie Campbell, Philip Cowley, Nick Vivyan, and Markus Wagner in the \textit{The Journal of Politics}. The next step is to improve upon their methods and make suggests as to what to do next. My thoughts are below:
 
-500 words about your proposed extension. You do not have to have done the extension yet. (That comes next week.) But it is time to start thinking about what your contribution to human knowledge will be. You seek admission to the School of Athens. What do you have to offer us?
+1. The first step is to suggest using stan_glm from the rstanarm package instead of the simple lm. This allows for the use of generalized linear modeling instead of linear modeling with optional prior distributions for the coefficients. It also works with a wider range of data due to not needing to be transformed like is sometimes required for lm. Granted that point may not apply to this cleaned data. 
+    
+2. Instead of using external packages for the predictions, amongst other things, the current code relies heavily upon functions created within the code itself. While still easily replicated, such actions, unless thoroughly understood, make understanding the code much more difficult. I  will look into different options to streamline the current process in which the models are created. 
+  
+3. Both studies examine how the attributes of the Members of Parliament influence views on behavioral localism and local roots. Nevertheless, the data does not look within many demographic categories which are collected about the subjects. How do these views change based upon individual political views, gender, education level etc. I aim therefore to also use priors to maybe weight for these separate groups to create a better picture of the UK electorate. 
+  
+4. Table 2 is currently more difficult to understand compared to the visualization such as figures 1 and 2. Therefore, I am to also plot the coefficients and their confidence intervals in order to present the information in a more intuitive format. 
+  
+5. Study 2 uses F-tests to see if there is interactions between Members of Parliaments' local ties and each remaining attribute. Page 140 in the textbook cautions against the use of such tests, for noisey data can give rise to insignificance with hypothesis testing even if there is some. Therefore it would be better to scrap this point or revise it. I am still in the process of determining a better alternative. 
+  
+6. In order to maybe make this study more reliable to extrapolate upon, we could delete all vignettes within the analysis where the Member of Parliament lives outside of the district which simply cannot occur with other legislators such as Congressmen in the United States which are required to live within their district. 
+
+These extensions will hopefully better the article as a whole and clarify its implications. 
 
 All analysis for this paper is available in my Github repository for this milestone is in the footnote below. ^[https://github.com/SamuelLowry/gov1006-milestone-6.git]
 
@@ -39,7 +51,7 @@ All analysis for this paper is available in my Github repository for this milest
 
 # Appendix of Graphics
 
-I was able to replicate table 2, figure 1, and figure 3. I was unable to replicate table 1 and figure 2 because they were not data related. They were merely visualizations displaying content about methods and experimental design. Table 1 depicts written descriptions of the hypothetical members of parliament present to subject. Figure 2 depicts a screenshot of the survery. 
+I was able to replicate table 2, figure 1, and figure 3. I was unable to replicate table 1 and figure 2 because they were not data related. They were merely visualizations displaying content about methods and experimental design. Table 1 depicts written descriptions of the hypothetical Members of Parliament present to subject. Figure 2 depicts a screenshot of the survey. 
 
 ## Table 2 {-} 
 
@@ -106,7 +118,7 @@ stargazer(mget(paste0("m",1:4)),
 
 ## Figure 1 {-} 
 
-```{r figure1, warning = FALSE}
+```{r figure1, warning = FALSE, cache = TRUE}
 
 #warning is false to delete warning for unknown variable specified in code which does not change vizualization from the paper. 
 
